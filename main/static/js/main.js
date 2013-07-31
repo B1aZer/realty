@@ -11,8 +11,6 @@ app.ApartmentsView = Backbone.View.extend({
 
     el: '#apartments',
 
-    entryTemplate: Handlebars.compile( $("#entry-template").html() ),
-
     initialize: function() {
 
         var that = this;
@@ -29,34 +27,61 @@ app.ApartmentsView = Backbone.View.extend({
     render: function() {
         var that = this;
         app.Apartments.each(function(model){
-            console.log(model);
+            /*
             that.$el.append(that.entryTemplate({
                 name:model.attributes.name,
                 address:model.attributes.address,
                 space:model.attributes.space,
             }));
+            */
+            var appartView = new app.ApartmentView({ model: model });
+            that.$el.append(appartView.render().el);
         });
-
-        /*
-        this.html(this.entryTemplate({
-          completed: completed,
-          remaining: remaining
-        }));
-        */
     },
+
     
 });
 
 app.ApartmentView = Backbone.View.extend({
+
+    className: 'col-lg-4',
+
     entryTemplate: Handlebars.compile( $("#entry-template").html() ),
-    render: function() {
-    /*
-        this.html(this.entryTemplate({
-            this.model.attributes;
-        }));
-        return this;
-        */
+
+    inputTemplate: Handlebars.compile( $("#input-template").html() ),
+
+    events: {
+        "click .btn-edit": "editFields",
+        "click .btn-done": "saveFields"
     },
+
+    initialize: function() {
+    },
+
+    render: function() {
+        this.$el.html( this.entryTemplate( this.model.toJSON() ) );
+        return this;
+    },
+
+    editFields: function (e) {
+        e.preventDefault();
+        var edit = this.inputTemplate( this.model.toJSON() );
+        this.$el.html(edit);
+    },
+
+    saveFields: function (e) {
+        e.preventDefault();
+        var name = this.$el.find('.name').val();
+        var address = this.$el.find('.address').val();
+        var space = this.$el.find('.space').val();
+        this.model.save({
+            name: name,
+            address: address,
+            space: space
+        });
+        var entry = this.entryTemplate( this.model.toJSON() );
+        this.$el.html(entry);
+    }
 });
 
 

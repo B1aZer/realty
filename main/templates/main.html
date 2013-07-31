@@ -15,15 +15,29 @@
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
+    <script id="input-template" type="text/x-handlebars-template">
+        {% verbatim %}
+          <img class="img-circle" data-src="holder.js/140x140">
+        <p>
+            <input class="edit name" value="{{name}}">
+        </p>
+        <p>
+            <input class="edit address" value="{{address}}">
+        </p>
+        <p>
+            <input class="edit space" value="{{space}}">
+        </p>
+          <p><a class="btn btn-default btn-done" href="#">Done &raquo;</a></p>
+        {% endverbatim %}
+    </script>
+
     <script id="entry-template" type="text/x-handlebars-template">
         {% verbatim %}
-        <div class="col-lg-4">
           <img class="img-circle" data-src="holder.js/140x140">
-          <h2>{{name}}</h2>
-          <p>{{address}}</p>
-          <p>{{space}}</p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
+          <h2 class="field">{{name}}</h2>
+          <p class="field">{{address}}</p>
+          <p class="field">{{space}}</p>
+          <p><a class="btn btn-default btn-edit" href="#">Edit &raquo;</a></p>
         {% endverbatim %}
     </script>
     
@@ -82,6 +96,7 @@
     <script src="{% static "js/underscore.js" %}"></script>
     <script src="{% static "js/backbone.js" %}"></script>
     <script src="{% static "js/handlebars.js" %}"></script>
+    <script src="{% static "js/ajax.post.fix.js" %}"></script>
     <script src="{% static "js/main.js" %}"></script>
   </body>
 </html>
