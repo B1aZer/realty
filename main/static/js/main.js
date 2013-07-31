@@ -56,6 +56,7 @@ app.ApartmentView = Backbone.View.extend({
     },
 
     initialize: function() {
+        this.listenTo(this.model, 'change', this.render);
     },
 
     render: function() {
@@ -79,8 +80,6 @@ app.ApartmentView = Backbone.View.extend({
             address: address,
             space: space
         });
-        var entry = this.entryTemplate( this.model.toJSON() );
-        this.$el.html(entry);
     }
 });
 
