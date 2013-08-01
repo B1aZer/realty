@@ -2,8 +2,11 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
 
 from models import Apartments
+from django.contrib.auth.models import User
 from serializers import ApartmentsSerializer
 
 def home(request):
@@ -28,5 +31,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     """
     queryset = Apartments.objects.all()
     serializer_class = ApartmentsSerializer
+
+
 
 
