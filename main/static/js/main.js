@@ -45,6 +45,7 @@ app.ApartmentsView = Backbone.View.extend({
 
     render: function() {
         var that = this;
+        this.$el.html('');
         app.Apartments.each(function(model){
             /*
             that.$el.append(that.entryTemplate({
@@ -127,6 +128,7 @@ app.Routes = Backbone.Router.extend({
     routes: {
         '':             'main',
         'app/:name':    'one',
+        'search/:name':    'one',
     },
     initialize: function() {
         /*_.bindAll(this, 'inbox', 'today');*/
@@ -159,9 +161,10 @@ app.Routes = Backbone.Router.extend({
     $(document).on('click','.search-go', function (e) {
         e.preventDefault();
         var value = $('.input-search').val();
-        var coll = app.Apartments.filterByName(value);
-        console.log(coll);
-        temp.filterByColl(coll);
+        //var coll = app.Apartments.filterByName(value);
+        //console.log(coll);
+        //temp.filterByColl(coll);
+        window.location.href = "#search/" + value;
     });
     
     $(document).on('click','.add-apps', function (e) {
