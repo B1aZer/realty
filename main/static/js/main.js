@@ -143,12 +143,21 @@ app.ApartmentSingleView = Backbone.View.extend({
 
     className: 'col-lg-1',
 
+    events: {
+        "click .btn-back": "goBack",
+    },
+
     oneTemplate: Handlebars.compile( $("#single-template").html() ),
 
     render: function() {
         this.$el.html( this.oneTemplate( this.model.toJSON() ) );
         return this;
     },
+
+    goBack: function(e) {
+        e.preventDefault();
+        window.history.back();
+    }
 
 });
 
