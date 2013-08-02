@@ -11,6 +11,12 @@ var ApartmentList  = Backbone.Collection.extend({
         return this.models.filter( function (item) {
             return item.get('name').indexOf(value) >= 0; 
         });
+    }, 
+    filterById: function (id) {
+        id = parseInt(id);
+        return this.models.filter( function (item) {
+            return item.id === id;
+        });
     } 
 });
 
@@ -74,6 +80,13 @@ app.ApartmentsView = Backbone.View.extend({
         var newitem = new app.ApartmentView ({model:nm});
         //this.$el.prepend(tpl);
         this.$el.prepend( newitem.renderEdit().el );
+    },
+
+    showOne: function(id) {
+        this.$el.html('');
+        var model = app.Apartments.filterById(id)[0];
+        var nv = new app.ApartmentSingleView ({ model: model });
+        this.$el.html( nv.render().el );  
     }
     
 });
@@ -88,7 +101,8 @@ app.ApartmentView = Backbone.View.extend({
 
     events: {
         "click .btn-edit": "editFields",
-        "click .btn-done": "saveFields"
+        "click .btn-done": "saveFields",
+        "click .btn-more": "showSingle"
     },
 
     initialize: function() {
@@ -121,14 +135,29 @@ app.ApartmentView = Backbone.View.extend({
             address: address,
             space: space
         });
-    }
+    },
+
+});
+
+app.ApartmentSingleView = Backbone.View.extend({
+
+    className: 'col-lg-1',
+
+    oneTemplate: Handlebars.compile( $("#single-template").html() ),
+
+    render: function() {
+        this.$el.html( this.oneTemplate( this.model.toJSON() ) );
+        return this;
+    },
+
 });
 
 app.Routes = Backbone.Router.extend({
     routes: {
         '':             'main',
         'app/:name':    'one',
-        'search/:name':    'one',
+        'search/:name': 'one',
+        'show/:id':     'showSingle',
     },
     initialize: function() {
         /*_.bindAll(this, 'inbox', 'today');*/
@@ -142,6 +171,9 @@ app.Routes = Backbone.Router.extend({
     one: function (name) {
         var coll = app.Apartments.filterByName(name);
         temp.filterByColl(coll);
+    },
+    showSingle: function (id) {
+        temp.showOne(id);
     }
 });
 
@@ -152,10 +184,10 @@ app.Routes = Backbone.Router.extend({
     // Kick things off by creating the **App**.
     //temp.render();
     var router = new app.Routes;
-    Backbone.history.start();
+        Backbone.history.start();
     //
     $('.carousel').carousel({
-      interval: 4000
+        interval: 4000
     })
 
     $(document).on('click','.search-go', function (e) {

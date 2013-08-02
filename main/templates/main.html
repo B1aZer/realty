@@ -32,6 +32,16 @@
     <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
+    <script id="single-template" type="text/x-handlebars-template">
+        {% verbatim %}
+        <div class="well well-large">
+        </div>
+          <h2 class="field">{{name}}</h2>
+          <p class="field">{{address}}</p>
+          <p class="field">{{space}}</p>
+          <p><a class="btn btn-default btn-back" href="#">Back &raquo;</a></p>
+        {% endverbatim %}
+    </script>
 
     <script id="input-template" type="text/x-handlebars-template">
         {% verbatim %}
@@ -55,7 +65,10 @@
           <h2 class="field">{{name}}</h2>
           <p class="field">{{address}}</p>
           <p class="field">{{space}}</p>
-          <p><a class="btn btn-default btn-edit" href="#">Edit &raquo;</a></p>
+          <p>
+          <a class="btn btn-default btn-edit" href="#">Edit &raquo;</a>
+          <a class="btn btn-default btn-more" href="#show/{{id}}">More &raquo;</a>
+          </p>
         {% endverbatim %}
     </script>
 
