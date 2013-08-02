@@ -33,6 +33,11 @@ app.ApartmentsView = Backbone.View.extend({
                 that.render();
             }
         });
+        //app.Apartments.bind('reset', this.render, this);
+
+        //app.Apartments.on('reset', this.render, this);
+        //app.Apartments.on('add', this.render, this);
+        
         //this.items = app.Apartments; 
     },
 
@@ -118,12 +123,34 @@ app.ApartmentView = Backbone.View.extend({
     }
 });
 
+app.Routes = Backbone.Router.extend({
+    routes: {
+        '':             'main',
+        'app/:name':    'one',
+    },
+    initialize: function() {
+        /*_.bindAll(this, 'inbox', 'today');*/
+        window.temp = new app.ApartmentsView;
+    },
+    main: function() {
+        console.log('home');
+        /*tasksView.render( tasks.inbox() );*/
+        temp.render();
+    },
+    one: function (name) {
+        var coll = app.Apartments.filterByName(name);
+        temp.filterByColl(coll);
+    }
+});
+
+
 
   $(function() {
 
     // Kick things off by creating the **App**.
-    window.temp = new app.ApartmentsView();
     //temp.render();
+    var router = new app.Routes;
+    Backbone.history.start();
     //
     $('.carousel').carousel({
       interval: 4000
