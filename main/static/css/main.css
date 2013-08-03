@@ -7,3 +7,14 @@
     display: block;
     height: 100px;
 }
+
+.maindiv {
+    overflow: hidden;
+}
+
+.img-circle {
+    background-image: url("/static/images/roll.jpg");
+    background-position: -300px 0;
+    height: 200px;
+    width: 200px;
+}

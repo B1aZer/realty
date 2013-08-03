@@ -93,7 +93,7 @@ app.ApartmentsView = Backbone.View.extend({
 
 app.ApartmentView = Backbone.View.extend({
 
-    className: 'col-lg-3',
+    className: 'col-lg-3 maindiv',
 
     entryTemplate: Handlebars.compile( $("#entry-template").html() ),
 
